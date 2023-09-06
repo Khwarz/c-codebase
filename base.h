@@ -1,6 +1,8 @@
 #ifndef BASE_H
 #define BASE_H
 
+// Compiler macros
+
 #if defined(__clang__)
 
 # define COMPILER_CLANG 1
@@ -107,5 +109,58 @@
 # define ARCH_ARM64 0
 #endif
 
-#endif // End ifndef
+#if !defined(ENABLE_ASSERT)
+#define ENABLE_ASSERT 1
+#endif
+
+// Helper macros
+
+#define STATEMENT(S) do { S } while (0)
+
+#if !defined(ASSERT_BREAK)
+#define ASSERT_BREAK() ((*(int *) 0) = 0)
+#endif
+
+#if ENABLE_ASSERT
+# define ASSERT(c) STATEMENT(if (!(c)) { ASSERT_BREAK(); })
+#else
+# define ASSERT(c)
+#endif
+
+#define STRINGIFY_(S) #S
+#define STRINGIFY(S) STRINGIFY_(S)
+
+#define GLUE_(A, B) A##B
+#define GLUE(A, B) GLUE_(A, B)
+
+#define ARRAY_COUNT(a) (sizeof(a)/sizeof(*(a)))
+
+#define INT_FROM_POINTER(p) ((unsigned long long)((char*)p - (char*)0))
+#define POINTER_FROM_INT(p) (void*)((char*)0 + (n))
+
+#define MEMBER(T, m) (((T*)0)->m)
+#define OFFSET_OF_MEMBER(T, m) INT_FROM_POINTER(&MEMBER(T, m))
+
+#define MIN(a, b) ((a) < (b) ? (a) : (b))
+#define MAX(a, b) ((a) > (b) ? (a) : (b))
+#define CLAMP(a, x, b) ((x) < (a) ? (a) : ((b) < (x) ? (b) : (x)))
+
+#define CLAMP_TOP(a, b) MIN(a, b)
+#define CLAMP_BOTTOM(a, b) MAX(a, b)
+
+#include <string.h>
+
+#define MEMORY_ZERO(p, z) memset((p), 0, (z))
+#define MEMORY_ZERO_STRUCT(p) MEMORY_ZERO((p), sizeof(*(p)))
+#define MEMORY_ZERO_ARRAY(p) MEMORY_ZERO((p), sizeof(p))
+#define MEMORY_ZERO_TYPED(p, c) MEMORY_ZERO((p), sizeof(*(p)) * (c))
+
+#define MEMORY_COMPARE(a, b, z) (memcmp((a), (b), (z)) == 0)
+
+#define MEMORY_COPY(d, s, z) memmove((d), (s), (z))
+#define MEMORY_COPY_STRUCT(d, s) MEMORY_COPY((d), (s), MIN(sizeof(*(d)), sizeof(*(s))))
+#define MEMORY_COPY_ARRAY(d, s) MEMORY_COPY((d), (s), MIN(sizeof(d), sizeof(s)))
+#define MEMORY_COPY_TYPED(d, s, c) MEMORY_COPY((d), (s), MIN(sizeof(*(d)), sizeof(*(s)) * (c)))
+
+#endif // BASE_H
 
