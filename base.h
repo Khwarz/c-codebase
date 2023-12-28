@@ -162,5 +162,40 @@
 #define MEMORY_COPY_ARRAY(d, s) MEMORY_COPY((d), (s), MIN(sizeof(d), sizeof(s)))
 #define MEMORY_COPY_TYPED(d, s, c) MEMORY_COPY((d), (s), MIN(sizeof(*(d)), sizeof(*(s)) * (c)))
 
+// Basic Types
+
+#include <stdint.h>
+typedef int8_t      i8;
+typedef int16_t     i16;
+typedef int32_t     i32;
+typedef int64_t     i64;
+typedef uint8_t     u8;
+typedef uint16_t    u16;
+typedef uint32_t    u32;
+typedef uint64_t    u64;
+typedef i8          b8;
+typedef i16         b16;
+typedef i32         b32;
+typedef i64         b64;
+typedef float       f32;
+typedef double      f64;
+
+typedef void VoidFunc(void);
+
+static i8 min_i8    = (i8) 0x80;
+static i16 min_i16  = (i16) 0x8000;
+static i32 min_i32  = (i32) 0x80000000;
+static i64 min_i64  = (i64) 0x80000000000000llu;
+
+static i8 max_i8    = (i8) 0x7f;
+static i16 max_i16  = (i16) 0x7fff;
+static i32 max_i32  = (i32) 0x7fffffff;
+static i64 max_i64  = (i64) 0x7fffffffffffffllu;
+
+static u8 max_u8    = (u8) 0xff;
+static u16 max_u16  = (u16) 0xffff;
+static u32 max_u32  = (u32) 0xffffffff;
+static u64 max_u64  = (u64) 0xffffffffffffffllu;
+
 #endif // BASE_H
 

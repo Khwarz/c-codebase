@@ -2,6 +2,10 @@
 #include <stdio.h>
 
 #define EVAL_PRINT(x) printf("%s = %d\n", #x, (int)(x))
+#define EVAL_PRINTLL(x) printf("%s = %d\n", #x, (i32)(x))
+
+#define EVAL_PRINTU(x) printf("%s = %u\n", #x, (u32)(x))
+#define EVAL_PRINTULL(x) printf("%s = %lu\n", #x, (u64)(x))
 
 typedef struct TestStruct {
     int a;
@@ -44,5 +48,20 @@ int main()
     EVAL_PRINT(CLAMP(1, 10, 100));
     EVAL_PRINT(CLAMP(1, 0, 100));
     EVAL_PRINT(CLAMP(1, 500, 100));
+
+    EVAL_PRINT(min_i8);
+    EVAL_PRINT(min_i16);
+    EVAL_PRINT(min_i32);
+    EVAL_PRINT(min_i64);
+
+    EVAL_PRINT(max_i8);
+    EVAL_PRINT(max_i16);
+    EVAL_PRINT(max_i32);
+    EVAL_PRINTLL(max_i64);
+
+    EVAL_PRINTU(max_u8);
+    EVAL_PRINTU(max_u16);
+    EVAL_PRINTU(max_u32);
+    EVAL_PRINTULL(max_u64);
     return 0;
 }
